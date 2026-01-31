@@ -1,9 +1,8 @@
-const http = require('http')
-const PORT = 3000
 const fs = require('fs')
 
-const server = http.createServer(goatedRouting);
+
 function goatedRouting(req, res) {
+    console.log(req.url, req.method)
     if (req.url == '/') {
         res.setHeader('Content-Type', 'text/html');
         res.write('<html>');
@@ -22,14 +21,33 @@ function goatedRouting(req, res) {
         return res.end();
     }
     else if (req.url.toLowerCase() == '/submit-details' && req.method == 'POST') {
-        fs.writeFileSync('user.txt','Prabhat Bishwakarma')
+        const body = []
+        req.on('data', chunk => {
+
+            console.log(chunk)
+            body.push(chunk)
+        })
+        req.on('end', () => {
+            console.log(body)
+            const fullBody = Buffer.concat(body).toString()
+            const params = new URLSearchParams(fullBody)
+            console.log(fullBody)
+            console.log(params)
+            console.log(params.entries())
+            // const bodyObject = {}
+            // for (const [key, value] of params.entries()) {
+            //     bodyObject[key] = value;
+            // }
+            const bodyObject = Object.fromEntries(params)
+
+            console.log(bodyObject)
+            fs.writeFileSync('Basics/user_details.json', JSON.stringify(bodyObject))
+        })
         res.statusCode = 302
-        res.setHeader('Location','/')
+        res.setHeader('Location', '/')
         return res.end()
     }
 
 }
 
-server.listen(PORT, () => {
-    console.log(`server running on address http://localhost:${PORT}`)
-})
+module.exports = goatedRouting
