@@ -1,14 +1,17 @@
 {
-  "name": "Express JS",
+  "name": "simple-form-express",
   "version": "1.0.0",
-  "description": "empty",
+  "description": "",
   "license": "ISC",
-  "author": "Xplore",
+  "author": "",
   "type": "commonjs",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start":  "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
