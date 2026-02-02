@@ -3,10 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Success Register</title>
+    <title>Add Home</title>
+    <link rel="stylesheet" href="/output.css" />
   </head>
-  <body>
-    <h1>Register home successful</h1>
-    <a href="/">Go homepage</a>
+  <body class="">
+    <main class="flex justify-center items-center h-screen">
+      <form
+        action="/host/add-home"
+        class="w-[50vw] gap-5 p-4 rounded-3xl h-fit bg-green-300 flex flex-col"
+        method="POST"
+      >
+        <h1 class="text-center text-4xl font-bold">Registered successful</h1>
+        
+        <a href="/">
+        <input
+          value="Click to go home page"
+          class="w-full cursor-pointer text-center font-medium hover:bg-green-500 rounded-3xl h-10 transition duration-300 active:scale-95 active:duration-100"
+        />
+        </a>
+      </form>
+    </main>
   </body>
 </html>

@@ -1,11 +1,10 @@
 const express = require('express');
 const homeRouter = express.Router();
-
+const rootDir = require('../utils/pathUtil.js');
+const path  = require('path');
 
 homeRouter.get('/', (req, res, next) => {
-    console.log(req.url, req.method);
-    res.send(`<h1> Welcome to Airbnb</h1>
-        <a href="/host/add-home">Add Home</a>`);
+    res.sendFile(path.join(rootDir,'views/home.html'));
 });
 
 

@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Airbnb Home</title>
+    <link rel="stylesheet" href="/output.css" />
   </head>
 
   <body>
-    <header>
-      <h1>Welcome to Airbnb</h1>
-    </header>
-    <main>
-      <a hFref="/host/add-home">Add Home</a>
+    <main class="flex justify-center items-center h-screen">
+      <form
+        class="w-[50vw] gap-5 p-4 rounded-3xl h-fit bg-teal-200 flex flex-col"
+      >
+        <h1 class="text-center text-4xl font-bold">Welcome to Airbnb</h1>
+
+        <a href="/host/add-home">
+          <input
+          type="button"
+            value="Register Home"
+            class="w-full outline-0 cursor-pointer text-center font-medium hover:bg-teal-400 rounded-3xl h-10 transition duration-300 active:scale-95 active:duration-100"
+          />
+        </a>
+      </form>
     </main>
   </body>
 </html>

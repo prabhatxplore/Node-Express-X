@@ -8,12 +8,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "dev": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --watch"
   },
   "dependencies": {
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
-  }
+    "@tailwindcss/cli": "^4.1.18",
+    "nodemon": "^3.1.11",
+    "tailwindcss": "^4.1.18"
+  },
+  "keywords": []
 }
