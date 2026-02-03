@@ -1,0 +1,27 @@
+<div class="flex flex-wrap gap-4 justify-center">
+  <% registeredHomes.forEach(home=>{ %>
+    <div class="cursor-pointer overflow-hidden h-[280px] w-[220px] font-medium rounded-2xl  flex flex-col gap-2">
+      <img class="object-center object-cover rounded-2xl h-[220px] w-[220px]" src=<%=home.imageLink %> alt="">
+
+      <div>
+        <div class="flex justify-between px-1.5">
+          <p>
+            <%= home.houseName %>
+          </p>
+          <p class="text-[#FF385C] ">
+            <%= home.price %> $
+          </p>
+        </div>
+
+        <div class="flex justify-between px-1.5 font-normal text-gray-500">
+          <p class="">
+            <%= home.location %>
+          </p>
+          <button class="px-2 rounded-[6px] bg-red-500  text-white">Book</button>
+          <a href="/home-details/<%= home.id %>" class="px-2 rounded-[6px] bg-blue-500  text-white">Details</a>
+        </div>
+      </div>
+
+    </div>
+    <% }) %>
+</div>
