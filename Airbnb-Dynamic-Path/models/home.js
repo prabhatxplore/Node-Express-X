@@ -11,6 +11,7 @@ module.exports = class Home {
     this.price = price;
     this.location = location;
     this.imageLink = imageLink;
+    this.fav = false;
   }
 
   save() {

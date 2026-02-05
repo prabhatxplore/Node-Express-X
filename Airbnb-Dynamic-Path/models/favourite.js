@@ -4,25 +4,44 @@ const rootDir = require("../utils/pathUtil");
 
 const filePathFav = path.join(rootDir, "data", "favData.json");
 
-module.exports = class Favourite {
-  static addToFavourite(homeId, cb) {
+class Favourite {
+  static toggleFavourite(favId, cb) {
+    // console.log(typeof favId);
+    let updatedFav;
     this.fetchFav((fav) => {
-      if (fav.includes(homeId)) {
-        cb("already exist on fav list");
-      } else {
-        fav.push(homeId);
-        fs.writeFile(filePathFav, JSON.stringify(fav), cb);
+      console.log(typeof fav);
+      console.log(fav);
+      // if home id exists remove from the list
+      if (fav.includes(favId)) {
+        updatedFav = fav.filter((id) => id !== favId);
+      } //if it doesnont exist
+      else {
+        fav.push(favId);
+        updatedFav = fav;
       }
+      fs.writeFile(filePathFav, JSON.stringify(updatedFav), (err) => {
+        if (err) {
+          console.log(err.message);
+        }
+        cb();
+      });
     });
   }
 
   static fetchFav(cb) {
     fs.readFile(filePathFav, "utf-8", (err, data) => {
-      if (!err && data.trim() != 0) {
+      if (err) {
+        console.log("whats the error", err.message);
+        console.log(data);
+      }
+
+      if (!err && data.trim() !== "") {
         cb(JSON.parse(data));
       } else {
         cb([]);
       }
     });
   }
-};
+}
+
+module.exports = Favourite;
