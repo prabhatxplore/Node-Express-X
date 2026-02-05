@@ -31,4 +31,14 @@ module.exports = class Home {
       }
     });
   }
+
+  static findById(homeId, cb) {
+    this.fetchData((registeredHomes) => {
+      registeredHomes.forEach((home) => {
+        if (home.id === homeId) {
+          cb(home);
+        }
+      });
+    });
+  }
 };

@@ -1,3 +1,4 @@
+const Favourite = require("../models/favourite");
 const Home = require("../models/home");
 
 exports.getHomeList = (req, res, next) => {
@@ -21,6 +22,12 @@ exports.getBookings = (req, res, next) => {
   });
 };
 exports.getFavouriteList = (req, res, next) => {
+  Favourite.fetchFav((fav) => {
+    Home.fetchData((regHome) => {
+      favHome = regHome.filter((home) => home === fav);
+    });
+  });
+
   Home.fetchData((registeredHomes) => {
     res.render("store/fav-list", {
       registeredHomes,
@@ -29,6 +36,8 @@ exports.getFavouriteList = (req, res, next) => {
     });
   });
 };
+
+exports.postAddFavourite = (req, res, next) => {};
 
 exports.getIndex = (req, res, next) => {
   res.render("store/index", {
@@ -39,15 +48,16 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getHomeDetails = (req, res, next) => {
-  console.log(req.params)
-
-
-  Home.fetchData((registeredHomes) => {
-
-    registeredHomes.forEach(home => {
-      if (home.id === req.params.homeId) {
-        res.render("store/home-details", { home, pageTitle: "Home Details", currentPage: "home" })
-      }
-    });
+  console.log(req.params);
+  Home.findById(req.params.homeId, (home) => {
+    if (!home) {
+      return res.redirect("/");
+    } else {
+      res.render("store/home-details", {
+        home,
+        pageTitle: "Home Details",
+        currentPage: "home",
+      });
+    }
   });
-}
+};
