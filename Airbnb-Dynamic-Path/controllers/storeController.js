@@ -30,7 +30,6 @@ exports.getBookings = (req, res, next) => {
   });
 };
 exports.getFavouriteList = (req, res, next) => {
-  console.log(req.url);
   Favourite.fetchFav((fav) => {
     Home.fetchData((registeredHomes) => {
       const updatedHomes = [];
@@ -42,7 +41,6 @@ exports.getFavouriteList = (req, res, next) => {
           });
         }
       });
-      console.log(updatedHomes);
       // console.log(fav);
       res.render("store/fav-list", {
         registeredHomes: updatedHomes,
@@ -54,8 +52,12 @@ exports.getFavouriteList = (req, res, next) => {
 };
 
 exports.postFavouriteToggle = (req, res, next) => {
+  console.log(req.url)
+  console.log(req.body.id)
+  console.log(req.body.params)
   Favourite.toggleFavourite(req.body.id, () => {
-    res.redirect("/fav-list");
+    redirectPage = '/'
+    res.redirect(redirectPage);
   });
 };
 

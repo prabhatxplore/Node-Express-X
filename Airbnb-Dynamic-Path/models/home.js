@@ -32,12 +32,29 @@ module.exports = class Home {
       }
     });
   }
-
+  static deleteHome(homeId, cb) {
+    this.findById(homeId, (home) => {
+      if (!home) {
+        console.log("cannot find id / didnot exist on data");
+        cb();
+      } else {
+        this.fetchData((registeredHomes) => {
+          const updatedHomes = registeredHomes.filter(
+            (home) => home.id !== homeId,
+          );
+          fs.writeFile(filePath, JSON.stringify(updatedHomes), (err) => {
+            cb;
+          });
+        });
+      }
+    });
+  }
   static findById(homeId, cb) {
     this.fetchData((registeredHomes) => {
       registeredHomes.forEach((home) => {
         if (home.id === homeId) {
-          cb(home);
+          console.log("hello");
+          return cb(home);
         }
       });
     });

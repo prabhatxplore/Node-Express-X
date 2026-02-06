@@ -1,5 +1,5 @@
 const Home = require("../models/home");
-
+const Favourite = require("../models/favourite")
 exports.getAddHome = (req, res, next) => {
   res.render("host/add-home.ejs", {
     pageTitle: "Register Home",
@@ -7,11 +7,20 @@ exports.getAddHome = (req, res, next) => {
   });
 };
 exports.getHostHome = (req, res, next) => {
-  Home.fetchData((registeredHomes) => {
-    res.render("host/host-home.ejs", {
-      registeredHomes,
-      pageTitle: "Host Home",
-      currentPage: "host-home",
+  Home.fetchData((allHomes) => {
+    Favourite.fetchFav((fav) => {
+      // add isFav who tells whether the user added home to fav list or not
+      const registeredHomes = allHomes.map((home) => {
+        return {
+          ...home,
+          isFav: fav.includes(home.id),
+        };
+      });
+      res.render("host/host-home", {
+        registeredHomes,
+        pageTitle: "Host Home",
+        currentPage: "host-home",
+      });
     });
   });
 };
@@ -25,3 +34,5 @@ exports.postAddHome = (req, res, next) => {
     currentPage: "addHome",
   });
 };
+
+exports.postDeleteHome = (req, res, next) => {};
