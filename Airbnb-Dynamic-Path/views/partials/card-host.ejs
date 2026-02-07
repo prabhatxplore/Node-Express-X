@@ -20,7 +20,8 @@
         <div class="flex justify-between items-center px-1.5 font-normal text-gray-500">
 
           <div>
-            <button class="px-2 rounded-[6px] bg-red-500  text-white">Edit</button>
+            <a href="/host/edit-home/<%=home.id%>?editing=true"
+              class="px-2 rounded-[6px] bg-red-500  text-white">Edit</a>
             <button class="px-2 rounded-[6px] bg-blue-500  text-white">Delete</button>
           </div>
           <form action="/fav-list/toggle" method="POST">

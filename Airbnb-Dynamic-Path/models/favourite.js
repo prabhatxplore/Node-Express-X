@@ -42,6 +42,13 @@ class Favourite {
       }
     });
   }
+
+  static deleteById(homeId, cb) {
+    this.fetchFav((favHomes) => {
+      favHomes = favHomes.filter((home) => home !== homeId);
+      fs.writeFile(filePathFav, JSON.stringify(favHomes), cb);
+    });
+  }
 }
 
 module.exports = Favourite;

@@ -32,7 +32,7 @@ module.exports = class Home {
       }
     });
   }
-  static deleteHome(homeId, cb) {
+  static deleteById(homeId, cb) {
     this.findById(homeId, (home) => {
       if (!home) {
         console.log("cannot find id / didnot exist on data");
@@ -59,4 +59,5 @@ module.exports = class Home {
       });
     });
   }
+  
 };
