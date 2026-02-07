@@ -1,12 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/pathUtil");
+const Favourite = require("./favourite");
 
 const filePath = path.join(rootDir, "data", "homeData.json");
 
 module.exports = class Home {
-  constructor(houseName, price, location, imageLink) {
-    this.id = crypto.randomUUID();
+  constructor({ id = crypto.randomUUID(), houseName, price, location, imageLink }) {
+    this.id = id;
     this.houseName = houseName;
     this.price = price;
     this.location = location;
@@ -14,11 +15,23 @@ module.exports = class Home {
     this.fav = false;
   }
 
-  save() {
+  save(isEdit) {
+    console.log(isEdit)
     Home.fetchData((registeredHomes) => {
-      registeredHomes.push(this);
+      if (isEdit) {
+        registeredHomes = registeredHomes.map(home => {
+          if (home.id === this.id) {
+            return this;
+          } else {
+            return home;
+          }
+        })
+      } else {
+        registeredHomes.push(this);
+      }
+
       fs.writeFile(filePath, JSON.stringify(registeredHomes), (error) => {
-        console.log(error);
+        console.log('is thhis', error);
       });
     });
   }
@@ -43,7 +56,7 @@ module.exports = class Home {
             (home) => home.id !== homeId,
           );
           fs.writeFile(filePath, JSON.stringify(updatedHomes), (err) => {
-            cb;
+            Favourite.deleteById(homeId, cb);
           });
         });
       }
@@ -59,5 +72,5 @@ module.exports = class Home {
       });
     });
   }
-  
+
 };

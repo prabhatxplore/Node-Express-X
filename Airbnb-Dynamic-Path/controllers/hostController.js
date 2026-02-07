@@ -10,15 +10,15 @@ exports.getAddHome = (req, res, next) => {
 
 
 exports.getEditHome = (req, res, next) => {
-  console.log(req.url)
-  console.log('Params', req.params)
-  console.log('Query', req.query)
+  // console.log(req.url)
+  // console.log('Params', req.params)
+  // console.log('Query', req.query)
 
   const homeId = req.params.homeId;
   const editing = req.query.editing === 'true';
-  console.log(editing)
+  // console.log(editing)
   Home.findById(homeId, (home) => {
-    console.log(home)
+    // console.log(home)
     res.render("host/add-home", {
       home,
       pageTitle: "Edit Home",
@@ -27,6 +27,16 @@ exports.getEditHome = (req, res, next) => {
     })
   })
 
+}
+
+exports.postEditHome = (req, res, next) => {
+  console.log('im at postedit home')
+  const { id, houseName, price, location, imageLink } = req.body;
+
+  const editHome = new Home({ houseName, price, location, imageLink, id });
+
+  editHome.save(true);
+  res.redirect("/host/host-home");
 }
 
 exports.getHostHome = (req, res, next) => {
@@ -50,12 +60,19 @@ exports.getHostHome = (req, res, next) => {
 
 exports.postAddHome = (req, res, next) => {
   const { houseName, price, location, imageLink } = req.body;
-  const home = new Home(houseName, price, location, imageLink);
-  home.save();
+  console.log(req.body)
+  const home = new Home({ houseName, price, location, imageLink });
+  console.log(home)
+  home.save(false);
   res.render("host/home-added", {
     pageTitle: "Success",
     currentPage: "addHome",
   });
 };
 
-exports.postDeleteHome = (req, res, next) => { };
+exports.postDeleteHome = (req, res, next) => {
+  console.log(req.params.homeId);
+  Home.deleteById(req.params.homeId, () => {
+    res.redirect("/host/host-home");
+  })
+};
