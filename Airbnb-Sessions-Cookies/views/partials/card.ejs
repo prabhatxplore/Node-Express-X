@@ -1,0 +1,89 @@
+<div class="max-w-7xl mx-auto px-4 py-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+
+    <% registeredHomes.forEach(home => { %>
+
+      <div class="w-full max-w-[260px] bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-200 flex flex-col">
+
+        <!-- Image Section -->
+        <div class="relative">
+          <p class="absolute top-2 left-2 text-xs bg-black/60 text-white px-2 py-0.5 rounded-md">
+            <%= home.location %>
+          </p>
+
+          <img
+            class="w-full h-[220px] object-cover"
+            src="<%= home.image_url %>"
+            alt="<%= home.house_name %>"
+          >
+        </div>
+
+        <!-- Content Section -->
+        <div class="p-3 flex flex-col gap-3 flex-grow">
+
+          <!-- Title + Price -->
+          <div class="flex justify-between items-start gap-2">
+            <p class="font-medium text-sm truncate">
+              <%= home.house_name %>
+            </p>
+
+            <p class="text-[#FF385C] font-semibold text-sm whitespace-nowrap">
+              <%= home.price %> $
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-between items-center text-sm mt-auto">
+
+            <div class="flex gap-2">
+
+              <!-- Book Button -->
+              <button
+                class="px-2 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition">
+                Book
+              </button>
+
+              <!-- Details Link -->
+              <a
+                href="/home-details/<%= home._id %>"
+                class="px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition">
+                Details
+              </a>
+
+            </div>
+
+            <!-- Favourite Toggle -->
+            <form action="/fav-list/toggle" method="POST">
+              <input type="hidden" name="_id" value="<%= home._id %>">
+
+              <button type="submit" class="flex items-center">
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6 transition"
+                  <% if(home.isFav){ %>
+                    fill="red" stroke="red"
+                  <% } else { %>
+                    fill="none"
+                  <% } %>
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+</div>

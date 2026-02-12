@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include('../partials/pagetitle') %>
+  <link rel="stylesheet" href="/output.css" />
+</head>
+
+<body class="">
+  <%- include('../partials/nav') %>
+  <main class="">
+      <form class="w-[50vw] mx-auto gap-5 py-14  rounded-3xl h-fit items-center flex flex-col">
+        <h1 class="text-center text-[#FF385C] text-4xl font-bold">Welcome to Airbnb</h1>
+
+        <a href="/host/add-home"
+          class="bg-[#FF385C] hover:scale-105 transition duration-150 rounded-[8px] p-1 px-3 font-medium text-white">
+          Add Home
+        </a>
+      </form>
+      <div class="border-t-[1px] border-t-gray-300 px-3 overflow-y-auto">
+        <h1 class=" text-center p-6 rounded-3xl font-medium text-2xl ">
+          Available Homes
+        </h1>
+        <%- include('../partials/card') %>
+      </div>
+    </main>
+</body>
+
+</html>
