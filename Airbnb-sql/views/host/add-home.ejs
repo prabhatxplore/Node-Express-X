@@ -20,13 +20,13 @@
         <div class="flex flex-col gap-2">
           <label class="text-center text-2xl">Enter Details</label>
           <input required minlength="7" class="outline-none w-full bg-white h-10 rounded-3xl px-5"
-            value="<%= editing ? home.houseName : '' %>" type="text" name="houseName"
+            value="<%= editing ? home.house_name : '' %>" type="text" name="house_name"
             placeholder="Enter name of the house" />
           <input required name="price" class="outline-none w-full bg-white h-10 rounded-3xl px-5"
             value="<%= editing ? home.price : '' %>" type="number" placeholder="Enter price" />
           <input required name="location" value="<%= editing ? home.location : '' %>"
             class="outline-none w-full bg-white h-10 rounded-3xl px-5" type="text" placeholder="Enter location" />
-          <input required name="imageLink" value="<%= editing ? home.imageLink : '' %>"
+          <input required name="image_url" value="<%= editing ? home.image_url : '' %>"
             class="outline-none w-full bg-white h-10 rounded-3xl px-5" type="text" placeholder="Enter image link" />
         </div>
         <input type="submit" value="<%= editing ? 'Update' : 'Submit' %>"
