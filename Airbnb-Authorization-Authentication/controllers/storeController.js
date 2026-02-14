@@ -6,10 +6,11 @@ const { default: mongoose } = require("mongoose");
 
 exports.getHomeList = (req, res, next) => {
   console.log(req.session.user)
+  console.log(req.session.isLogged)
   // console.log(req.session)
   // console.log('Home Session: ', req.session, req.session.isLogged)
   Home.find().then((registeredHomes) => {
-    console.log(registeredHomes)
+    // console.log(registeredHomes)
     res.render("store/home-list", {
       registeredHomes,
       pageTitle: "Home Page",
@@ -104,7 +105,7 @@ exports.getHomeDetails = (req, res, next) => {
 
   const homeId = req.params.homeId
   Home.findById(homeId).then(data => {
-    console.log("i am the error")
+    // console.log("i am the error")
     // console.log(data)
     res.render("store/home-details", {
       home: data,
