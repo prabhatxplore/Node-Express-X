@@ -46,7 +46,7 @@
               </a>
 
             </div>
-            <% const isFav=user.favourites.includes(home._id.toString()) %>
+            <% const isFav=user && user.favourites? user.favourites.includes(home._id.toString()) :false %>
               <!-- Favourite Toggle -->
               <form action="/fav-list/toggle" method="POST">
                 <input type="hidden" name="_id" value="<%= home._id %>">
