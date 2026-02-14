@@ -8,13 +8,15 @@ const homeSchema = mongoose.Schema({
   location: { type: String, required: true },
   image_url: { type: String, required: true },
   description: String,
-  isFav: { type: Boolean, default: false }
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  }
 });
 
 homeSchema.pre('findOneAndDelete', async function () {
   const id = this.getQuery()._id
-  // console.log('This is the homeSchema pre', id)
-  const Favourite = mongoose.model('Favourite');
-  await Favourite.deleteOne({ homeId: id });
+  console.log(id)
 })
 module.exports = mongoose.model('Home', homeSchema);
