@@ -18,6 +18,7 @@ const authRouter = require("./routes/authRouter.js")
 const rootDir = require("./utils/pathUtil.js");
 const { pageNotFound } = require("./controllers/errors.js");
 const mongoose = require('mongoose');
+const { isHost } = require("./middlewares/isHost.js");
 
 
 const app = express();
@@ -38,7 +39,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: store
+  store: store,
+  rolling: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24
+  }
 }))
 
 store.on("error", err => console.log(err))
@@ -48,13 +53,7 @@ app.use(authRouter)
 app.use(express.static(path.join(rootDir, "public")));
 
 app.use(homeRouter);
-app.use("/host", (req, res, next) => {
-  if (req.session.isLogged && req.session.user.user_type === "host"    ) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-}, hostRouter);
+app.use("/host", isHost, hostRouter);
 
 // 404 error routing
 app.use(pageNotFound);
