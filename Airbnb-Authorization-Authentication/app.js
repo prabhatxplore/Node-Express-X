@@ -2,7 +2,7 @@
 const express = require("express");
 const path = require("path");
 const session = require("express-session")
-const MongoDBStore = require('connect-mongodb-session')(session)
+const MongoStore = require('connect-mongo').default;
 
 require('dotenv').config();
 
@@ -26,9 +26,10 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 // Store
-const store = new MongoDBStore({
-  uri: MONGO_URL,
-  collection: 'sessions'
+const store = MongoStore.create({
+  mongoUrl: MONGO_URL,
+  collectionName: "sessions",
+  ttl: 60 * 60 * 24
 })
 
 
@@ -40,7 +41,7 @@ app.use(session({
   store: store
 }))
 
-store.on("error",err=>console.log(err))
+store.on("error", err => console.log(err))
 
 
 app.use(authRouter)
@@ -48,7 +49,7 @@ app.use(express.static(path.join(rootDir, "public")));
 
 app.use(homeRouter);
 app.use("/host", (req, res, next) => {
-  if (req.session.isLogged) {
+  if (req.session.isLogged && req.session.user.user_type === "host"    ) {
     next();
   } else {
     res.redirect("/login");
