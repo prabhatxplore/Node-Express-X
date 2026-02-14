@@ -23,6 +23,7 @@ exports.getEditHome = async (req, res, next) => {
   })
 
   if (!homeEdit) {
+    console.log(req.session.user)
     return res.status(404).render("404", { pageTitle: 'Cannot found', currentPage: 'host-home', text: "Cannot find ID", description: "id is not found", isLogged: req.session.isLogged, user: req.session.user })
   }
   res.render("host/add-home", {
@@ -49,14 +50,14 @@ exports.postEditHome = (req, res, next) => {
     home.price = price;
     home.location = location;
     home.image_url = image_url;
-    home.save().then(result => {
-      // console.log('Updated home', result);
-      res.redirect("/host/host-home");
-    }).catch(err => {
-      console.log('Error while updating', err)
-    })
+    return home.save()
+
+  }).then(home => {
+    res.redirect("/host/host-home");
   }).catch(err => {
-    console.log('not found id', err);
+    console.log("Error while updating", err);
+    // Send a friendly error to the user
+    res.status(500).render("error", { message: "Failed to update home. Please try again." });
   })
 
 };
@@ -97,7 +98,7 @@ exports.postAddHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   // console.log(req.params.homeId);
-  
+
   Home.findOneAndDelete({ _id: req.params.homeId })
     .then(() => {
       res.redirect("/host/host-home");
