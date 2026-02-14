@@ -15,8 +15,8 @@ const homeSchema = mongoose.Schema({
   }
 });
 
-homeSchema.pre('findOneAndDelete', async function () {
-  const id = this.getQuery()._id
-  console.log(id)
-})
+// homeSchema.pre('findOneAndDelete', async function () {
+//   const id = this.getQuery()._id
+//   console.log(id)
+// })
 module.exports = mongoose.model('Home', homeSchema);
