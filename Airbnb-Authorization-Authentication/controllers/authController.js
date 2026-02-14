@@ -145,10 +145,38 @@ exports.postLogin = async (req, res, next) => {
 
 
     }
+    req.session.regenerate(err => {
+        if (err) {
+            console.log("Session regeneration error:", err);
+            return res.status(500).render("auth/login", {
+                pageTitle: 'Login',
+                currentPage: 'login',
+                isLogged: false,
+                errors: ["Error on session"],
+                oldInput: { email }
+            })
+        }
 
-    req.session.isLogged = true;
-    req.session.user_id = user._id;
-    res.redirect('/')
+        req.session.isLogged = true;
+        req.session.user = {
+            _id: user._id,
+            user_type: user.user_type,
+            favourites: user.favourites
+        }
+        req.session.save(err => {
+            if (!err) {
+                return res.redirect('/');
+            }
+            return res.status(500).render("auth/login", {
+                pageTitle: 'Login',
+                currentPage: 'login',
+                isLogged: false,
+                errors: ["Error on session"],
+                oldInput: { email }
+            })
+        })
+    })
+
 
 }
 exports.postLogOut = (req, res, next) => {
