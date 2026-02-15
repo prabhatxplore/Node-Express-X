@@ -38,7 +38,7 @@ exports.getEditHome = async (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { _id, house_name, price, location, image_url } = req.body;
+  const { _id, house_name, price, location } = req.body;
   const homeId = new mongoose.Types.ObjectId(_id);
   const userId = new mongoose.Types.ObjectId(req.session.user._id);
 
@@ -49,7 +49,10 @@ exports.postEditHome = (req, res, next) => {
     home.house_name = house_name;
     home.price = price;
     home.location = location;
-    home.image_url = image_url;
+    if (req.file) {
+
+      home.photo = "/uploads/" + req.file.filename
+    }
     return home.save()
 
   }).then(home => {
@@ -76,15 +79,26 @@ exports.getHostHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  const { house_name, price, location, image_url } = req.body;
+  const { house_name, price, location, description } = req.body;
+  console.log(req.file)
+
+
+  if (!req.file) {
+    return res.status(422).send("No image provided");
+  }
+
+  const photo = "/uploads/" + req.file.filename
+
   const home = new Home({
     house_name,
     price,
     location,
-    image_url,
-    description: "",
+    photo,
+    description,
     owner: req.session.user._id
   });
+
+
   home.save().then(() => {
     console.log('Home save success');
     res.render("host/home-added", {

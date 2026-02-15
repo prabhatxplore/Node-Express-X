@@ -5,8 +5,8 @@ const User = require("../models/user.js");
 const { default: mongoose } = require("mongoose");
 
 exports.getHomeList = (req, res, next) => {
-  console.log(req.session.user)
-  console.log(req.session.isLogged)
+  // console.log(req.session.user)
+  // console.log(req.session.isLogged)
   // console.log(req.session)
   // console.log('Home Session: ', req.session, req.session.isLogged)
   Home.find().then((registeredHomes) => {
@@ -103,10 +103,11 @@ exports.postFavouriteToggle = async (req, res, next) => {
 
 exports.getHomeDetails = (req, res, next) => {
 
-  const homeId = req.params.homeId
+  const homeId = new mongoose.Types.ObjectId(req.params.homeId);
+
   Home.findById(homeId).then(data => {
-    // console.log("i am the error")
-    // console.log(data)
+    console.log("i am the error")
+    console.log(data)
     res.render("store/home-details", {
       home: data,
       pageTitle: "Home Details",

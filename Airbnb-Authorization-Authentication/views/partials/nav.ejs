@@ -11,14 +11,14 @@
       <a class="<%= currentPage==='fav-list'?'text-[#FF385C]' : 'hover:text-[#FF385C]' %> transition duration-150 rounded-[8px] p-1 px-3 font-medium"
         href="/fav-list">Favourite</a>
 
-      <% if(user.user_type==="host" ){%>
+      <% if(user?.user_type==="host" ){%>
         <a class="<%= currentPage==='host-home'?'text-[#FF385C]' : 'hover:text-[#FF385C]' %> transition duration-150 rounded-[8px] p-1 px-3 font-medium"
           href="/host/host-home">Host Home</a>
         <a class="<%= currentPage==='addHome'?'text-[#FF385C]' : 'hover:text-[#FF385C]' %> transition duration-150 rounded-[8px] p-1 px-3 font-medium"
           href="/host/add-home">Add Home</a>
-      <% } %>
+        <% } %>
 
-    <% }%>
+          <% }%>
   </div>
   <div class="flex-1 h-16 flex items-center">
     <% if(!isLogged){ %>

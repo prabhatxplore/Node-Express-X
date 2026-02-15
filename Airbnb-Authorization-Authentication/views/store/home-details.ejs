@@ -19,27 +19,26 @@
             </div>
 
             <div class="flex justify-center">
-                <div
-                    class="cursor-pointer font-medium rounded-2xl  flex gap-8 ">
-                    <img class="object-center w-[30rem] object-cover rounded-2xl " src=<%= home.image_url %>
+                <div class="cursor-pointer font-medium rounded-2xl  flex gap-8 ">
+                    <img class="object-center w-[30rem] object-cover rounded-2xl " src=<%=home.photo %>
                     alt="">
 
                     <div class="flex flex-col gap-6">
-                            <p class="text-3xl">
-                                <%= home.house_name %>
-                            </p>
-                            <p class="text-[#FF385C] text-2xl ">
-                                <%= home.price %> $
-                            </p>
+                        <p class="text-3xl">
+                            <%= home.house_name %>
+                        </p>
+                        <p class="text-[#FF385C] text-2xl ">
+                            <%= home.price %> $
+                        </p>
 
-                            <p class=" text-2xl">
-                                <%= home.location %>
-                            </p>
-                            <button class="px-2 rounded-[6px] bg-red-500  text-white">Book</button>
-                        </div>
+                        <p class=" text-2xl">
+                            <%= home.location %>
+                        </p>
+                        <button class="px-2 rounded-[6px] bg-red-500  text-white">Book</button>
                     </div>
-
                 </div>
+
+            </div>
             </div>
         </main>
 </body>

@@ -8,31 +8,76 @@
     <link rel="stylesheet" href="/output.css" />
 </head>
 
-<body class="">
+<body class="bg-gray-100 min-h-screen">
+
   <%- include('../partials/nav') %>
-    <main class="flex justify-center items-center mt-32">
-      <form action="<%= editing ? '/host/edit-home' : '/host/add-home' %>"
-        class="w-[40vw] gap-5 p-4 rounded-3xl h-fit outline  flex flex-col" method="POST">
-        <input type="hidden" name="_id" value="<%= editing ? home._id : '' %>" id="">
-        <h1 class="text-center text-4xl font-bold">
+
+    <main class="flex items-center justify-center px-4 py-16">
+
+      <form action="<%= editing ? '/host/edit-home' : '/host/add-home' %>" method="POST" enctype="multipart/form-data"
+        class="w-full max-w-xl bg-white p-8 rounded-2xl shadow-lg space-y-6">
+
+        <input type="hidden" name="_id" value="<%= editing ? home._id : '' %>">
+
+        <h1 class="text-2xl font-semibold text-gray-800 text-center">
           <%= editing ? 'Edit Home' : 'Register Home' %>
         </h1>
-        <div class="flex flex-col gap-2">
-          <label class="text-center text-2xl">Enter Details</label>
-          <input required minlength="7" class="outline-none w-full bg-white h-10 rounded-3xl px-5"
-            value="<%= editing ? home.house_name : '' %>" type="text" name="house_name"
-            placeholder="Enter name of the house" />
-          <input required name="price" class="outline-none w-full bg-white h-10 rounded-3xl px-5"
-            value="<%= editing ? home.price : '' %>" type="number" placeholder="Enter price" />
-          <input required name="location" value="<%= editing ? home.location : '' %>"
-            class="outline-none w-full bg-white h-10 rounded-3xl px-5" type="text" placeholder="Enter location" />
-          <input required name="image_url" value="<%= editing ? home.image_url : '' %>"
-            class="outline-none w-full bg-white h-10 rounded-3xl px-5" type="text" placeholder="Enter image link" />
+
+        <!-- House Name -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-600">House Name</label>
+          <input type="text" name="house_name" required minlength="7" value="<%= editing ? home.house_name : '' %>"
+            placeholder="Enter house name"
+            class="w-full h-11 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition" />
         </div>
-        <input type="submit" value="<%= editing ? 'Update' : 'Submit' %>"
-          class="w-full cursor-pointer font-medium <%= editing ? ' bg-green-500 text-black hover:bg-green-600' : 'bg-[#FF385C] hover:bg-[#e73455] text-white' %>  rounded-3xl h-10 transition duration-300 active:scale-95 active:duration-100" />
+
+        <!-- Price -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-600">Price (per night)</label>
+          <input type="number" name="price" required value="<%= editing ? home.price : '' %>" placeholder="Enter price"
+            class="w-full h-11 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition" />
+        </div>
+
+        <!-- Location -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-600">Location</label>
+          <input type="text" name="location" required value="<%= editing ? home.location : '' %>"
+            placeholder="Enter location"
+            class="w-full h-11 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition" />
+        </div>
+
+        <!-- Description -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-600">Description</label>
+          <textarea name="description" rows="4" required placeholder="Write a short description..."
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 resize-none focus:outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition"><%= editing ? home.description : '' %></textarea>
+        </div>
+
+        <!-- Photo Upload -->
+        <div class="space-y-2">
+          <label class="text-sm font-medium text-gray-600">Upload Photo</label>
+          <input type="file" name="photo" class="w-full text-sm text-gray-600
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-lg file:border-0
+          file:text-sm file:font-medium
+          file:bg-[#FF385C] file:text-white 
+          hover:file:bg-[#e73455]
+          cursor-pointer transition" accept="image/*" <%=editing ? '' : 'required' %>
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full h-11 rounded-lg font-semibold text-white transition duration-200 active:scale-95
+        <%= editing 
+          ? 'bg-green-500 hover:bg-green-600' 
+          : 'bg-[#FF385C] hover:bg-[#e73455]' %>">
+          <%= editing ? 'Update Property' : 'Submit Property' %>
+        </button>
+
       </form>
+
     </main>
+
 </body>
 
 </html>
