@@ -1,8 +1,8 @@
 exports.isAuth = (req, res, next) => {
-    if (!req.session.user && req.isLogged) {
-        return res.redirect("/login");
+    if (req.session.user && req.session.isLogged) {
+        next();
     }
     else {
-        next();
+        return res.redirect("/login");
     }
 }
