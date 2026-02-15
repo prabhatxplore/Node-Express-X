@@ -6,7 +6,7 @@ const homeSchema = mongoose.Schema({
   house_name: { type: String, required: true },
   price: { type: Number, required: true },
   location: { type: String, required: true },
-  image_url: { type: String, required: true },
+  photo: { type: String, required: true },
   description: String,
   owner: {
     type: mongoose.Schema.Types.ObjectId,
