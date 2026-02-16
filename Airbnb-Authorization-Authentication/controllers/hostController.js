@@ -1,5 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const Home = require("../models/home");
+const fs = require("fs")
+const path = require("path")
 exports.getAddHome = (req, res, next) => {
 
   res.render("host/add-home.ejs", {
@@ -41,7 +43,7 @@ exports.postEditHome = (req, res, next) => {
   const { _id, house_name, price, location } = req.body;
   const homeId = new mongoose.Types.ObjectId(_id);
   const userId = new mongoose.Types.ObjectId(req.session.user._id);
-
+  console.log(req.file)
   Home.findOne({
     _id: homeId,
     owner: userId
@@ -50,12 +52,29 @@ exports.postEditHome = (req, res, next) => {
     home.price = price;
     home.location = location;
     if (req.file) {
+      const oldFilePath = path.join(__dirname, "..", home.photo);
 
+      // ✅ Delete old file
+      fs.unlink(oldFilePath, (err) => {
+        if (err) {
+          console.log("Error while deleting file", err)
+        }
+      })
       home.photo = "/uploads/" + req.file.filename
+    } else {
+      console.log("running first time")
+      res.status(422).redirect(`/host/edit-home/${_id}?editing=true`);
+      return
     }
+    console.log("running second time")
     return home.save()
 
   }).then(home => {
+    console.log()
+    console.log("Is home", home)
+    if (!home) {
+      return
+    }
     res.redirect("/host/host-home");
   }).catch(err => {
     console.log("Error while updating", err);

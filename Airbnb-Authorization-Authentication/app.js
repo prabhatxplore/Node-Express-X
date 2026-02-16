@@ -6,7 +6,6 @@ const MongoStore = require('connect-mongo').default;
 const multer = require("multer")
 require('dotenv').config();
 const crypto = require("crypto");
-
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT;
 // Env variavles
